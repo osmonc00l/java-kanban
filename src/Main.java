@@ -1,3 +1,9 @@
+import ru.yandex.schedule.Manager.TaskManager;
+import ru.yandex.schedule.Manager.Tasks.Epic;
+import ru.yandex.schedule.Manager.Tasks.Status;
+import ru.yandex.schedule.Manager.Tasks.Subtask;
+import ru.yandex.schedule.Manager.Tasks.Task;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -19,12 +25,7 @@ public class Main {
 
         System.out.println(epic1);
         System.out.println(epic2);
-        for (Integer subtaskId : epic1.getSubtaskIds()) {
-            System.out.println(manager.getSubtasks().get(subtaskId));
-        }
-        for (Integer subtaskId : epic2.getSubtaskIds()) {
-            System.out.println(manager.getSubtasks().get(subtaskId));
-        }
+        manager.printSubtasks();
         manager.printEpics();
 
 
