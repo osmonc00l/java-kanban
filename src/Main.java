@@ -1,8 +1,8 @@
-import ru.yandex.schedule.Manager.TaskManager;
-import ru.yandex.schedule.Manager.Tasks.Epic;
-import ru.yandex.schedule.Manager.Tasks.Status;
-import ru.yandex.schedule.Manager.Tasks.Subtask;
-import ru.yandex.schedule.Manager.Tasks.Task;
+import ru.yandex.schedule.manager.TaskManager;
+import ru.yandex.schedule.tasks.Epic;
+import ru.yandex.schedule.tasks.Status;
+import ru.yandex.schedule.tasks.Subtask;
+import ru.yandex.schedule.tasks.Task;
 
 public class Main {
 

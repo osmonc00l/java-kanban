@@ -1,4 +1,4 @@
-package ru.yandex.schedule.Manager.Tasks;
+package ru.yandex.schedule.tasks;
 
 public class Subtask extends Task {
     private int epicId;
@@ -9,7 +9,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "ru.yandex.schedule.Manager.Tasks.Subtask{" +
+        return "ru.yandex.schedule.Tasks.Subtask{" +
                 "EpicId=" + epicId +
                 ", name='" + super.getName() + '\'' +
                 ", description='" + super.getDescription() + '\'' +

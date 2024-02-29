@@ -1,4 +1,4 @@
-package ru.yandex.schedule.Manager.Tasks;
+package ru.yandex.schedule.tasks;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "ru.yandex.schedule.Manager.Tasks.Epic{" +
+        return "ru.yandex.schedule.Tasks.Epic{" +
                 "subtaskIds=" + subtaskIds +
                 ", name='" + super.getName() + '\'' +
                 ", description='" + super.getDescription() + '\'' +

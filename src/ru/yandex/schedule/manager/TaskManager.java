@@ -1,16 +1,16 @@
-package ru.yandex.schedule.Manager;
+package ru.yandex.schedule.manager;
 
-import ru.yandex.schedule.Manager.Tasks.Epic;
-import ru.yandex.schedule.Manager.Tasks.Task;
-import ru.yandex.schedule.Manager.Tasks.Subtask;
-import ru.yandex.schedule.Manager.Tasks.Status;
+import ru.yandex.schedule.tasks.Epic;
+import ru.yandex.schedule.tasks.Task;
+import ru.yandex.schedule.tasks.Subtask;
+import ru.yandex.schedule.tasks.Status;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TaskManager {
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    HashMap<Integer, Epic> epics = new HashMap<>();
+    private HashMap<Integer, Task> tasks = new HashMap<>();
+    private HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    private HashMap<Integer, Epic> epics = new HashMap<>();
     private int idSequence;
 
     private int idNumber;
@@ -84,7 +84,6 @@ public class TaskManager {
         if (epics.containsKey(updatedEpic.getId())) {
             epics.get(updatedEpic.getId()).setName(updatedEpic.getName());
             epics.get(updatedEpic.getId()).setDescription(updatedEpic.getDescription());
-            updateStatusEpic(epics.get(updatedEpic.getId()));
         } else {
             System.out.println("Эпик не найден");
         }
@@ -178,10 +177,6 @@ public class TaskManager {
         } else {
             System.out.println("Эпик не найден");
         }
-    }
-
-    public HashMap<Integer, Subtask> getSubtasks() {
-        return subtasks;
     }
 
 
