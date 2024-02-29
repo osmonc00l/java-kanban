@@ -81,9 +81,10 @@ public class TaskManager {
 
     }
     public void updateEpic(Epic updatedEpic) {
-        if (epics.containsKey(updatedEpic.getSubtaskIds())) {
-            epics.put(updatedEpic.getId(), updatedEpic);
-            updateStatusEpic(updatedEpic);
+        if (epics.containsKey(updatedEpic.getId())) {
+            epics.get(updatedEpic.getId()).setName(updatedEpic.getName());
+            epics.get(updatedEpic.getId()).setDescription(updatedEpic.getDescription());
+            updateStatusEpic(epics.get(updatedEpic.getId()));
         } else {
             System.out.println("Эпик не найден");
         }
