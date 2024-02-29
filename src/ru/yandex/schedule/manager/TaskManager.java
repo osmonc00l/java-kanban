@@ -14,7 +14,6 @@ public class TaskManager {
     private HashMap<Integer, Epic> epics = new HashMap<>();
     private int idSequence;
 
-    private int idNumber;
     public int addTask(Task task) {
         int newTaskId = generateIdSequence();
         task.setId(newTaskId);
