@@ -12,6 +12,11 @@ public class Task {
         this.description = description;
         this.status = status;
     }
+    public Task(Task task) {
+        this.name = task.name;
+        this.description = task.description;
+        this.status = task.status;
+    }
 
     public String getName() {
         return name;
