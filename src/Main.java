@@ -1,3 +1,5 @@
+import ru.yandex.schedule.manager.InMemoryTaskManager;
+import ru.yandex.schedule.manager.Managers;
 import ru.yandex.schedule.manager.TaskManager;
 import ru.yandex.schedule.tasks.Epic;
 import ru.yandex.schedule.tasks.Status;
@@ -7,7 +9,7 @@ import ru.yandex.schedule.tasks.Task;
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager manager = new TaskManager();
+        TaskManager manager = Managers.getInMemoryTaskManager(Managers.getDefaultHistory());
         Task task1 = new Task("First task", "desc-1", Status.NEW);
         Task task2 = new Task("Second task", "desc-2", Status.NEW);
         Epic epic1 = new Epic("First epic", "desc-1");
@@ -23,13 +25,29 @@ public class Main {
         manager.addTask(task1);
         manager.addTask(task2);
 
-        System.out.println(epic1);
-        System.out.println(epic2);
-        manager.printSubtasks();
-        manager.printEpics();
-        epic1.setName("updated_epic1");
-        epic1.setDescription("Updated description of epic1");
-        manager.printEpics();
+//        System.out.println(epic1);
+//        System.out.println(epic2);
+//        manager.printSubtasks();
+//        manager.printEpics();
+//        epic1.setName("updated_epic1");
+//        epic1.setDescription("Updated description of epic1");
+//        subtask2.setStatus(Status.DONE);
+//        manager.updateStatusEpic(epic1);
+//        manager.printEpics();
+        System.out.println(manager.getEpicById(1));
+        System.out.println(manager.getTaskById(6));
+        System.out.println(manager.getSubtaskById(3));
+        System.out.println(manager.getEpicById(1));
+        System.out.println(manager.getTaskById(6));
+        System.out.println(manager.getSubtaskById(3));
+        System.out.println(manager.getEpicById(1));
+        System.out.println(manager.getTaskById(6));
+        System.out.println(manager.getSubtaskById(3));
+        System.out.println(manager.getTaskById(6));
+        //System.out.println(manager.getTaskById(7));
+        System.out.println("____________________________________________________________");
+        System.out.println(manager.getHistory());
+
 
 
 

@@ -9,7 +9,7 @@ public class Subtask extends Task {
 
     @Override
     public String toString() {
-        return "ru.yandex.schedule.Tasks.Subtask{" +
+        return "Subtask{" +
                 "EpicId=" + epicId +
                 ", name='" + super.getName() + '\'' +
                 ", description='" + super.getDescription() + '\'' +

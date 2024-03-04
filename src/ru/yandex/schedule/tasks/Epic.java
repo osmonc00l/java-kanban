@@ -15,7 +15,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "ru.yandex.schedule.Tasks.Epic{" +
+        return "Epic{" +
                 "subtaskIds=" + subtaskIds +
                 ", name='" + super.getName() + '\'' +
                 ", description='" + super.getDescription() + '\'' +

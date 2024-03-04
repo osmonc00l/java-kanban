@@ -60,7 +60,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "ru.yandex.schedule.Tasks.Task{" +
+        return "Task{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", id=" + id +
