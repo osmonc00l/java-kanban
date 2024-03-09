@@ -5,7 +5,8 @@ public class Managers<T extends TaskManager> {
         return new InMemoryTaskManager(historyManager);
     }
 
-    public static HistoryManager getDefaultHistory() {
+    public static HistoryManager getDefaultHistoryManager() {
         return new InMemoryHistoryManager();
     }
+
 }

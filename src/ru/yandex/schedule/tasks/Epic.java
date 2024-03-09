@@ -3,7 +3,7 @@ package ru.yandex.schedule.tasks;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subtaskIds;
+    private final ArrayList<Integer> subtaskIds;
 
     public ArrayList<Integer> getSubtaskIds() {
         return subtaskIds;
@@ -23,24 +23,17 @@ public class Epic extends Task {
                 ", status=" + super.getStatus() +
                 '}';
     }
-    public void addNewSubtask(int id){
-        subtaskIds.add(id);
-    }
 
-    public void deleteSubtask(int id){
+    public void deleteSubtask(int id) {
         subtaskIds.remove(id);
     }
 
-    public void deleteAllSubtasksOfEpic(){
+    public void deleteAllSubtasksOfEpic() {
         subtaskIds.clear();
     }
 
     public Epic(String name, String description) {
         super(name, description, Status.NEW);
         this.subtaskIds = new ArrayList<>();
-    }
-    public Epic(Epic epic) {
-        super(epic.getName(), epic.getDescription(), epic.getStatus());
-        this.subtaskIds = epic.getSubtaskIds();
     }
 }

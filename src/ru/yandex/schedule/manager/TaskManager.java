@@ -4,7 +4,7 @@ import ru.yandex.schedule.tasks.Epic;
 import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
     int addTask(Task task);
@@ -37,20 +37,19 @@ public interface TaskManager {
 
     Epic getEpicById(int id);
 
-    ArrayList<Subtask> getSubtasksOfEpic(int epicId);
+    List<Subtask> getSubtasksOfEpic(int epicId);
 
-    ArrayList<Task> getAllTasks();
+    List<Task> getAllTasks();
 
-    ArrayList<Epic> getAllEpics();
+    List<Epic> getAllEpics();
 
-    ArrayList<Subtask> getAllsubtasks();
-
-    void updateStatusEpic(Epic epic);
+    List<Subtask> getAllSubtasks();
 
     void printEpics();
 
     void printSubtasks();
 
     void printTasks();
-    public ArrayList<Task> getHistory();
+
+    List<Task> getHistory();
 }
