@@ -9,6 +9,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     private Node head;
     private Node tail;
     private int size;
+
     @Override
     public void add(Task task) {
         linkLast(task);
@@ -22,7 +23,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void remove(int id) {
         removeNode(id);
     }
-
 
     @Override
     public ArrayList<Task> getHistory() {
