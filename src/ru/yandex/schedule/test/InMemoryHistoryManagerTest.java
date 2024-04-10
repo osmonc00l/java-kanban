@@ -1,4 +1,4 @@
-package ru.yandex.schedule.tests;
+package ru.yandex.schedule.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
