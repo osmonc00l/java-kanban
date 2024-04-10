@@ -8,7 +8,6 @@ import ru.yandex.schedule.tasks.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks = new HashMap<>();
@@ -151,7 +150,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteAllEpics() {
         deleteAllSubtasks();
-        for(int epicId : epics.keySet()) {
+        for (int epicId: epics.keySet()) {
             deleteEpic(epicId);
         }
         epics.clear();

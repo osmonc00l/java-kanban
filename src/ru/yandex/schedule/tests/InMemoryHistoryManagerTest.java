@@ -3,7 +3,6 @@ package ru.yandex.schedule.tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.schedule.manager.Managers;
-import ru.yandex.schedule.manager.TaskManager;
 import ru.yandex.schedule.manager.HistoryManager;
 import ru.yandex.schedule.tasks.Status;
 import ru.yandex.schedule.tasks.Task;
@@ -16,10 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InMemoryHistoryManagerTest {
     HistoryManager historyManager;
+
     @BeforeEach
-    public void initEach(){
+    public void initEach() {
         historyManager = Managers.getDefaultHistoryManager();
     }
+
     @Test
     void add() {
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);

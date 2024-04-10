@@ -3,14 +3,12 @@ package ru.yandex.schedule.tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.schedule.manager.Managers;
-import ru.yandex.schedule.manager.InMemoryTaskManager;
 import ru.yandex.schedule.manager.TaskManager;
 import ru.yandex.schedule.tasks.Epic;
 import ru.yandex.schedule.tasks.Status;
 import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,10 +22,12 @@ class InMemoryTaskManagerTest {
     private Integer taskId;
     private Integer epicId;
     private Integer subTaskId;
+
     @BeforeEach
-    public void initEach(){
+    public void initEach() {
         taskManager = Managers.getInMemoryTaskManager(Managers.getDefaultHistoryManager());
     }
+
     @Test
     void addTask() {
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
@@ -120,8 +120,9 @@ class InMemoryTaskManagerTest {
         assertEquals(1, epics.size(), "Неверное количество эпиков.");
         assertEquals(savedEpic, epics.get(0), "Эпики не совпадают.");
     }
+
     @Test
-    void historyContainsOldVersions(){
+    void historyContainsOldVersions() {
         Task task1 = new Task("task", "desc", Status.NEW);
         taskManager.addTask(task1);
         assertEquals(task1.getName(), taskManager.getTaskById(1).getName());
@@ -129,6 +130,7 @@ class InMemoryTaskManagerTest {
         task1.setDescription("Updated decp");
         assertEquals(task1.getName(), taskManager.getTaskById(1).getName());
     }
+
     @Test
     void checkIfTasksAreSame() {
         Task task1 = new Task("task", "desc", Status.NEW);
@@ -138,6 +140,7 @@ class InMemoryTaskManagerTest {
         task1.setDescription("Updated decp");
         assertEquals(task1, taskManager.getTaskById(1));
     }
+
     @Test
     void checkIfTasksHasSameFields() {
         Task task1 = new Task("task", "desc", Status.NEW);
@@ -146,6 +149,7 @@ class InMemoryTaskManagerTest {
         assertEquals(task1.getDescription(), taskManager.getTaskById(1).getDescription());
         assertEquals(task1.getStatus(), taskManager.getTaskById(1).getStatus());
     }
+
     @Test
     void canNotAddSubtaskToSubtasks() {
         Epic epic = new Epic("Epic", "Epic description");
@@ -157,6 +161,7 @@ class InMemoryTaskManagerTest {
         List<Subtask> history = taskManager.getAllSubtasks();
         assertEquals(2, history.size());
     }
+
     @Test
     public void deleteAllTasksTest() {
         Task task = new Task("task", "desc", Status.NEW);
@@ -164,6 +169,7 @@ class InMemoryTaskManagerTest {
         taskManager.deleteAllTasks();
         assertEquals(Collections.EMPTY_LIST, taskManager.getAllTasks());
     }
+
     @Test
     public void deleteAllEpicsTest() {
         Epic epic = new Epic("Epic", "Epic description");
@@ -171,6 +177,7 @@ class InMemoryTaskManagerTest {
         taskManager.deleteAllEpics();
         assertEquals(Collections.EMPTY_LIST, taskManager.getAllEpics());
     }
+
     @Test
     public void deleteAllSubTasksTest() {
         Epic epic = new Epic("Epic", "Epic description");
@@ -181,6 +188,7 @@ class InMemoryTaskManagerTest {
         assertTrue(epic.getSubtaskIds().isEmpty());
         assertTrue(taskManager.getAllSubtasks().isEmpty());
     }
+
     @Test
     public void deleteTaskFromHistory() {
         Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
@@ -193,6 +201,7 @@ class InMemoryTaskManagerTest {
         history = taskManager.getAllTasks();
         assertEquals(history.size(), taskManager.getAllTasks().size());
     }
+
     @Test
     public void deleteEpicFromHistory() {
         Epic epic = new Epic("Epic", "Epic description");
@@ -205,6 +214,7 @@ class InMemoryTaskManagerTest {
         history = taskManager.getHistory();
         assertEquals(history.size(), taskManager.getAllEpics().size());
     }
+
     @Test
     public void deleteAllSubtasksFromHistory() {
         Epic epic = new Epic("Epic", "Epic description");
