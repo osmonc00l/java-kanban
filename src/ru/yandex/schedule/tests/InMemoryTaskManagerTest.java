@@ -10,13 +10,20 @@ import ru.yandex.schedule.tasks.Status;
 import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
-    TaskManager taskManager;
+    private TaskManager taskManager;
+    private Task task;
+    private Epic epic;
+    private Subtask subTask;
+    private Integer taskId;
+    private Integer epicId;
+    private Integer subTaskId;
     @BeforeEach
     public void initEach(){
         taskManager = Managers.getInMemoryTaskManager(Managers.getDefaultHistoryManager());
@@ -173,5 +180,43 @@ class InMemoryTaskManagerTest {
         taskManager.deleteAllSubtasks();
         assertTrue(epic.getSubtaskIds().isEmpty());
         assertTrue(taskManager.getAllSubtasks().isEmpty());
+    }
+    @Test
+    public void deleteTaskFromHistory() {
+        Task task = new Task("Test addNewTask", "Test addNewTask description", Status.NEW);
+        final int taskId = taskManager.addTask(task);
+        assertEquals(task, taskManager.getTaskById(taskId));
+        List<Task> history = taskManager.getHistory();
+        assertArrayEquals(history.toArray(), taskManager.getAllTasks().toArray());
+        assertEquals(history.size(), taskManager.getAllTasks().size());
+        taskManager.deleteAllTasks();
+        history = taskManager.getAllTasks();
+        assertEquals(history.size(), taskManager.getAllTasks().size());
+    }
+    @Test
+    public void deleteEpicFromHistory() {
+        Epic epic = new Epic("Epic", "Epic description");
+        final int epicId = taskManager.addEpic(epic);
+        assertEquals(epic, taskManager.getEpicById(epicId));
+        List<Task> history = taskManager.getHistory();
+        assertArrayEquals(history.toArray(), taskManager.getAllEpics().toArray());
+        assertEquals(history.size(), taskManager.getAllEpics().size());
+        taskManager.deleteAllEpics();
+        history = taskManager.getHistory();
+        assertEquals(history.size(), taskManager.getAllEpics().size());
+    }
+    @Test
+    public void deleteAllSubtasksFromHistory() {
+        Epic epic = new Epic("Epic", "Epic description");
+        final int epicId = taskManager.addEpic(epic);
+        Subtask subtask = new Subtask("Subtask", "Subtask description", Status.NEW, epicId);
+        final int subtaskId = taskManager.addSubtask(subtask);
+        assertEquals(subtask, taskManager.getSubtaskById(subtaskId));
+        List<Task> history = taskManager.getHistory();
+        assertArrayEquals(history.toArray(), taskManager.getAllSubtasks().toArray());
+        assertEquals(history.size(), taskManager.getAllSubtasks().size());
+        taskManager.deleteAllSubtasks();
+        history = taskManager.getHistory();
+        assertEquals(history.size(), taskManager.getAllSubtasks().size());
     }
 }
