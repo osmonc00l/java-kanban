@@ -1,9 +1,9 @@
-package ru.yandex.schedule.test;
+package test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.yandex.schedule.manager.Managers;
 import ru.yandex.schedule.manager.HistoryManager;
+import ru.yandex.schedule.manager.Managers;
 import ru.yandex.schedule.tasks.Status;
 import ru.yandex.schedule.tasks.Task;
 
@@ -12,8 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-
-class InMemoryHistoryManagerTest {
+public class InMemoryTaskManagerTest {
     HistoryManager historyManager;
 
     @BeforeEach
@@ -29,5 +28,4 @@ class InMemoryHistoryManagerTest {
         assertNotNull(history, "История не пустая.");
         assertEquals(1, history.size(), "История не пустая.");
     }
-
 }
