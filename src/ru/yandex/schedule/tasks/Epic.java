@@ -6,7 +6,7 @@ public class Epic extends Task {
     private final ArrayList<Integer> subtaskIds;
 
     public ArrayList<Integer> getSubtaskIds() {
-        return subtaskIds;
+        return new ArrayList<>(subtaskIds);
     }
 
     public void setSubtaskIds(int id) {
@@ -24,7 +24,7 @@ public class Epic extends Task {
                 '}';
     }
 
-    public void deleteSubtask(int id) {
+    public void deleteSubtask(Integer id) {
         subtaskIds.remove(id);
     }
 
