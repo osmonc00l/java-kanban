@@ -80,12 +80,8 @@ public class InMemoryTaskManager implements TaskManager {
     public Subtask deleteSubtask(int id) {
         if (subtasks.containsKey(id)) {
             Subtask subtask = subtasks.remove(id);
-//            Epic epic = epics.get(subtask.getEpicId());
-//            epic.deleteSubtask(subtask.getId());
-//            updateStatusEpic(epic);
             epics.get(subtask.getEpicId()).deleteSubtask(subtask.getId());
             historyManager.remove(id);
-            subtasks.remove(id);
             return subtask;
         } else {
             System.out.println("Такой подзадачи не существует");
@@ -128,8 +124,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private int generateIdSequence() {
-        idSequence++;
-        return idSequence;
+        return ++idSequence;
     }
 
     @Override
