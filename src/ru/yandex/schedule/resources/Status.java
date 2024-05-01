@@ -1,4 +1,4 @@
-package ru.yandex.schedule.tasks;
+package ru.yandex.schedule.resources;
 
 public enum Status {
     NEW,

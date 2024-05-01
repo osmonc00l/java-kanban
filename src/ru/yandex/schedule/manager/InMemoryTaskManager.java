@@ -1,7 +1,8 @@
 package ru.yandex.schedule.manager;
 
+import ru.yandex.schedule.resources.Managers;
 import ru.yandex.schedule.tasks.Epic;
-import ru.yandex.schedule.tasks.Status;
+import ru.yandex.schedule.resources.Status;
 import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
@@ -10,21 +11,25 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
+    protected final HashMap<Integer, Task> tasks = new HashMap<>();
+    protected final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    protected final HashMap<Integer, Epic> epics = new HashMap<>();
     private int idSequence;
-    private final HistoryManager historyManager;
+    protected final HistoryManager historyManager = Managers.getDefaultHistoryManager();
 
-    public InMemoryTaskManager(HistoryManager historyManager) {
-        this.historyManager = historyManager;
+    protected Integer putInTaskHashMap(Task task) {
+        if (task != null) {
+            tasks.put(task.getId(), task);
+            return task.getId();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int addTask(Task task) {
         task.setId(generateIdSequence());
-        tasks.put(task.getId(), task);
-        return task.getId();
+        return putInTaskHashMap(task);
     }
 
     @Override
@@ -46,20 +51,24 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    @Override
-    public int addSubtask(Subtask subtask) {
-        int subtaskId = generateIdSequence();
-        subtask.setId(subtaskId);
+    protected Integer putInSubTaskHashMap(Subtask subtask) {
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
             subtasks.put(subtask.getId(), subtask);
             epic.setSubtaskIds(subtask.getId());
             updateStatusEpic(epic);
-            return subtaskId;
+            return subtask.getId();
         } else {
             System.out.println("Эпик не найден");
             return -1;
         }
+    }
+
+    @Override
+    public int addSubtask(Subtask subtask) {
+        int subtaskId = generateIdSequence();
+        subtask.setId(subtaskId);
+        return putInSubTaskHashMap(subtask);
     }
 
     @Override
@@ -89,12 +98,20 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    protected Integer putInEpicHashMap(Epic epic) {
+        if (epic != null) {
+            epics.put(epic.getId(), epic);
+            return epic.getId();
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public int addEpic(Epic epic) {
         int epicId = generateIdSequence();
         epic.setId(epicId);
-        epics.put(epic.getId(), epic);
-        return epic.getId();
+        return putInEpicHashMap(epic);
 
     }
 

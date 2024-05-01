@@ -2,9 +2,9 @@ package managers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.yandex.schedule.manager.Managers;
+import ru.yandex.schedule.resources.Managers;
 import ru.yandex.schedule.manager.HistoryManager;
-import ru.yandex.schedule.tasks.Status;
+import ru.yandex.schedule.resources.Status;
 import ru.yandex.schedule.tasks.Task;
 
 import java.util.List;
