@@ -64,7 +64,6 @@ class InMemoryTaskManagerTest {
         final int subtaskId = taskManager.addSubtask(subtask);
 
         final Subtask savedSubtask = taskManager.getSubtaskById(subtaskId);
-
         assertNotNull(savedSubtask, "Сабтаски не найдены.");
         assertEquals(subtask, savedSubtask, "Сабтаски не совпадают.");
 

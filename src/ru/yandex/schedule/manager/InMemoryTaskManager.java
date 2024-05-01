@@ -14,7 +14,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final HashMap<Integer, Task> tasks = new HashMap<>();
     protected final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     protected final HashMap<Integer, Epic> epics = new HashMap<>();
-    private int idSequence;
+    protected int idSequence;
     protected final HistoryManager historyManager = Managers.getDefaultHistoryManager();
 
     protected Integer putInTaskHashMap(Task task) {
@@ -51,7 +51,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
-    protected Integer putInSubTaskHashMap(Subtask subtask) {
+    protected Integer putInSubtaskHashMap(Subtask subtask) {
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
             subtasks.put(subtask.getId(), subtask);
@@ -68,7 +68,7 @@ public class InMemoryTaskManager implements TaskManager {
     public int addSubtask(Subtask subtask) {
         int subtaskId = generateIdSequence();
         subtask.setId(subtaskId);
-        return putInSubTaskHashMap(subtask);
+        return putInSubtaskHashMap(subtask);
     }
 
     @Override
@@ -170,20 +170,35 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int id) {
-        historyManager.add(tasks.get(id));
-        return tasks.get(id);
+        if(tasks.containsKey(id)) {
+            historyManager.add(tasks.get(id));
+            return tasks.get(id);
+        } else {
+            return null;
+        }
+
     }
 
     @Override
     public Subtask getSubtaskById(int id) {
-        historyManager.add(subtasks.get(id));
-        return subtasks.get(id);
+        if(subtasks.containsKey(id)) {
+            historyManager.add(subtasks.get(id));
+            return subtasks.get(id);
+        } else {
+            return null;
+        }
+
     }
 
     @Override
     public Epic getEpicById(int id) {
-        historyManager.add(epics.get(id));
-        return epics.get(id);
+        if(epics.containsKey(id)) {
+            historyManager.add(epics.get(id));
+            return epics.get(id);
+        } else {
+            return null;
+        }
+
     }
 
     @Override

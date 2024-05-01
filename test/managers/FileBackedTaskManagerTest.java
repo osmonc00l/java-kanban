@@ -3,27 +3,25 @@ package managers;
 import org.junit.jupiter.api.Test;
 import ru.yandex.schedule.manager.FileBackedTaskManager;
 import ru.yandex.schedule.resources.Status;
-import ru.yandex.schedule.resources.TaskTypes;
 import ru.yandex.schedule.tasks.Epic;
 import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FileBackedTaskManagerTest {
     @Test
     void shouldBePositiveIfEmptyFileSaveAndLoadSuccess () throws IOException {
         try {
-            File file = File.createTempFile("temp","csv", new File( "/resources") );
-            File file1 = File.createTempFile("temp1","csv", new File( "/resources") );
-            FileBackedTaskManager fb = new FileBackedTaskManager(file.toPath());
+            File temporaryFile = File.createTempFile("data", "csv");
+            File temporaryFile2 = File.createTempFile("temp1","csv", new File( "/resources") );
+            FileBackedTaskManager fb = FileBackedTaskManager.loadFromFile(temporaryFile.toPath());
             assertNotNull(fb);
-            FileBackedTaskManager fb1 = FileBackedTaskManager.loadFromFile(file1);
+            FileBackedTaskManager fb1 = FileBackedTaskManager.loadFromFile(temporaryFile.toPath());
             assertNotNull(fb1);
         } catch (IOException e) {
             e.getStackTrace();
@@ -31,64 +29,34 @@ public class FileBackedTaskManagerTest {
     }
 
     @Test
-    void shouldBePositiveIfTasksSaveIsCorrect() throws IOException {
+    void shouldBePositiveIfTasksSaveIsCorrect() {
         try {
-            File file = File.createTempFile("temp","csv", new File( "/resources") );
+            File file = File.createTempFile("data", "csv");
             Task task = new Task("task", "description");
             Epic epic = new Epic("epic","epicDescription");
-            Subtask subtask = new Subtask("subtask", "subtaskDescription",
-                    Status.NEW, epic.getId());
-            FileBackedTaskManager fb = new FileBackedTaskManager(file.toPath());
+
+            FileBackedTaskManager fb = new FileBackedTaskManager(file);
             assertNotNull(fb);
 
             fb.addTask(task);
             fb.getTaskById(task.getId());
             fb.addEpic(epic);
             fb.getEpicById(epic.getId());
+            Subtask subtask = new Subtask("subtask", "subtaskDescription",
+                    Status.NEW, epic.getId());
             fb.addSubtask(subtask);
             fb.getSubtaskById(subtask.getId());
 
-            String refer = String.valueOf(task.getId()) + TaskTypes.TASK + task.getName()
-                    + task.getStatus() + task.getDescription();
-            refer = refer + String.valueOf(epic.getId()) + TaskTypes.EPIC + epic.getName()
-                    + epic.getStatus() + epic.getDescription();
-            refer = refer + String.valueOf(subtask.getId()) + TaskTypes.SUBTASK + subtask.getName()
-                    + subtask.getStatus() + subtask.getDescription()
-                    + String.valueOf(subtask.getEpicId());
-            refer = refer + String.valueOf(task.getId()) + String.valueOf(epic.getId())
-                    + String.valueOf(subtask.getId());
-            BufferedReader bf = new BufferedReader(new FileReader(file));
-            String test = "";
-            while (bf.ready()) {
-                test = bf.readLine();
-            }
-            bf.close();
-            assertEquals(refer,test);
+            String expectedData = "id,type,name,status,description,epic\n" +
+                    "1,TASK,task,NEW,description\n" +
+                    "2,EPIC,epic,NEW,epicDescription\n" +
+                    "3,SUBTASK,subtask,NEW,subtaskDescription,2" + "\r\n\r\n" + "1,2,3";
 
-            fb.deleteEpic(epic.getId());
-            refer = String.valueOf(task.getId()) + TaskTypes.TASK + task.getName()
-                    + task.getStatus() + task.getDescription() + String.valueOf(task.getId());
+            String lines = fb.toString();
+            assertEquals(expectedData, lines);
+            FileBackedTaskManager fb1 = FileBackedTaskManager.loadFromFile(file.toPath());
+            assertEquals(fb.toString(), fb1.toString());
 
-            bf = new BufferedReader(new FileReader(file));
-            test = "";
-            while (bf.ready()) {
-                test = bf.readLine();
-            }
-            bf.close();
-            assertEquals(refer,test);
-
-            task.setStatus(Status.DONE);
-            fb.updateTask(task);
-            refer = String.valueOf(task.getId()) + TaskTypes.TASK + task.getName()
-                    + Status.DONE + task.getDescription() + String.valueOf(task.getId());
-
-            bf = new BufferedReader(new FileReader(file));
-            test = "";
-            while (bf.ready()) {
-                test = bf.readLine();
-            }
-            bf.close();
-            assertEquals(refer,test);
         } catch (IOException e) {
             e.getStackTrace();
         }
@@ -97,22 +65,23 @@ public class FileBackedTaskManagerTest {
     @Test
     void Test3() throws IOException {
         try {
-            File file = File.createTempFile("temp","csv", new File( "/resources") );
+            File file = File.createTempFile("data", "csv");
             Task task = new Task("task1", "desc1");
             Epic epic = new Epic("epic1","epicDesk");
-            Subtask subtask = new Subtask("subtask1", "subtaskDesc",
-                    Status.NEW, epic.getId());
-            FileBackedTaskManager fb = new FileBackedTaskManager(file.toPath());
+
+            FileBackedTaskManager fb = new FileBackedTaskManager(file);
             assertNotNull(fb);
 
             fb.addTask(task);
             fb.getTaskById(task.getId());
             fb.addEpic(epic);
             fb.getEpicById(epic.getId());
+            Subtask subtask = new Subtask("subtask1", "subtaskDesc",
+                    Status.NEW, epic.getId());
             fb.addSubtask(subtask);
             fb.getSubtaskById(subtask.getId());
-
-            FileBackedTaskManager fb1 = FileBackedTaskManager.loadFromFile(file);
+            fb.getEpicById(epic.getId());
+            FileBackedTaskManager fb1 = FileBackedTaskManager.loadFromFile(file.toPath());
             assertEquals(fb.getAllTasks(), fb1.getAllTasks());
             assertEquals(fb.getAllEpics(), fb1.getAllEpics());
             assertEquals(fb.getAllSubtasks(), fb1.getAllSubtasks());
