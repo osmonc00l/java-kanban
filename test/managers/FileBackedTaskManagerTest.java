@@ -50,7 +50,7 @@ public class FileBackedTaskManagerTest {
             String expectedData = "id,type,name,status,description,epic\n" +
                     "1,TASK,task,NEW,description\n" +
                     "2,EPIC,epic,NEW,epicDescription\n" +
-                    "3,SUBTASK,subtask,NEW,subtaskDescription,2" + "\r\n\r\n" + "1,2,3";
+                    "3,SUBTASK,subtask,NEW,subtaskDescription,2" + "\n\n" + "1,2,3";
 
             String lines = fb.toString();
             assertEquals(expectedData, lines);
