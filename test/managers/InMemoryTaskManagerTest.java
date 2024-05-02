@@ -2,10 +2,10 @@ package managers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.yandex.schedule.manager.Managers;
 import ru.yandex.schedule.manager.TaskManager;
+import ru.yandex.schedule.resources.Managers;
 import ru.yandex.schedule.tasks.Epic;
-import ru.yandex.schedule.tasks.Status;
+import ru.yandex.schedule.resources.Status;
 import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
@@ -19,7 +19,7 @@ class InMemoryTaskManagerTest {
 
     @BeforeEach
     public void initEach() {
-        taskManager = Managers.getInMemoryTaskManager(Managers.getDefaultHistoryManager());
+        taskManager = Managers.getInMemoryTaskManager();
     }
 
     @Test
@@ -64,7 +64,6 @@ class InMemoryTaskManagerTest {
         final int subtaskId = taskManager.addSubtask(subtask);
 
         final Subtask savedSubtask = taskManager.getSubtaskById(subtaskId);
-
         assertNotNull(savedSubtask, "Сабтаски не найдены.");
         assertEquals(subtask, savedSubtask, "Сабтаски не совпадают.");
 
