@@ -73,7 +73,6 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
             assertEquals(expectedData, lines);
             FileBackedTaskManager fb1 = FileBackedTaskManager.loadFromFile(file.toPath());
             assertEquals(fb.toString(), fb1.toString());
-
         } catch (IOException e) {
             e.getStackTrace();
         }
@@ -91,7 +90,6 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
                     LocalDateTime.of(2023, 9, 2, 7, 0),
                     Duration.ofMinutes(30).toMinutes());
             fb.addTask(task);
-            fb.getTaskById(task.getId());
             fb.addEpic(epic);
             fb.getEpicById(epic.getId());
             Subtask subtask = new Subtask("Подзадача",
@@ -99,12 +97,14 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
                     LocalDateTime.of(2023, 10, 6, 12, 0),
                     Duration.ofMinutes(30).toMinutes());
             fb.addSubtask(subtask);
-            fb.getSubtaskById(subtask.getId());
             fb.getEpicById(epic.getId());
+            fb.getTaskById(task.getId());
+            fb.getSubtaskById(subtask.getId());
             FileBackedTaskManager fb1 = FileBackedTaskManager.loadFromFile(file.toPath());
             assertEquals(fb.getTasksList(), fb1.getTasksList());
             assertEquals(fb.getEpicsList(), fb1.getEpicsList());
             assertEquals(fb.getSubtasksList(), fb1.getSubtasksList());
+            assertEquals(fb.toString(), fb1.toString());
 
         } catch (IOException e) {
             e.getStackTrace();

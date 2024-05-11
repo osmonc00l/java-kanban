@@ -193,35 +193,37 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     public static FileBackedTaskManager loadFromFile(Path dataFile) {
-        FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(dataFile.toFile());
-        LinkedList<String> readLinesFromFile = new LinkedList<>();
-        try (BufferedReader bufferedReader = new BufferedReader(
-                new FileReader(dataFile.toString(), StandardCharsets.UTF_8))) {
-            if (bufferedReader.ready()) {
-                bufferedReader.readLine();
-            }
-            while (bufferedReader.ready()) {
-                readLinesFromFile.add(bufferedReader.readLine());
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+         try {
+             FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(dataFile.toFile());
+             LinkedList<String> readLinesFromFile = new LinkedList<>();
+             BufferedReader bufferedReader = new BufferedReader(
+                     new FileReader(dataFile.toString(), StandardCharsets.UTF_8));
+             if (bufferedReader.ready()) {
+                 bufferedReader.readLine();
+             }
+             while (bufferedReader.ready()) {
+                 readLinesFromFile.add(bufferedReader.readLine());
+             }
 
-        String historyLine = readLinesFromFile.pollLast();
 
-        for (String line : readLinesFromFile) {
-            if (!line.isEmpty()) {
-                fileBackedTaskManager.fromString(line);
-            }
-        }
+             String historyLine = readLinesFromFile.pollLast();
 
-        if (Objects.nonNull(historyLine)) {
-            historyFromString(historyLine).stream()
-                    .peek(fileBackedTaskManager::getTaskById)
-                    .peek(fileBackedTaskManager::getEpicById)
-                    .forEach(fileBackedTaskManager::getSubtaskById);
-        }
-        return fileBackedTaskManager;
+             for (String line : readLinesFromFile) {
+                 if (!line.isEmpty()) {
+                     fileBackedTaskManager.fromString(line);
+                 }
+             }
+
+             if (Objects.nonNull(historyLine)) {
+                 historyFromString(historyLine).stream()
+                         .peek(fileBackedTaskManager::getTaskById)
+                         .peek(fileBackedTaskManager::getEpicById)
+                         .forEach(fileBackedTaskManager::getSubtaskById);
+             }
+             return fileBackedTaskManager;
+         } catch (IOException e) {
+             throw new RuntimeException(e.getMessage());
+         }
     }
 
     static List<Integer> historyFromString(String value) {
