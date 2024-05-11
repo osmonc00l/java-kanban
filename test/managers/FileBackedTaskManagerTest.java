@@ -27,7 +27,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
         return null;
     }
     @Test
-    void shouldBePositiveIfEmptyFileSaveAndLoadSuccess () throws IOException {
+    void shouldBePositiveIfEmptyFileSaveAndLoadSuccess (){
         try {
             File temporaryFile = File.createTempFile("data", "csv");
             FileBackedTaskManager fb = FileBackedTaskManager.loadFromFile(temporaryFile.toPath());
@@ -61,10 +61,13 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
                     Duration.ofMinutes(30).toMinutes());
             fb.addSubtask(subtask);
             fb.getSubtaskById(subtask.getId());
-            String expectedData = "id,type,name,status,description,epic\n" +
-                    "1,TASK,Задача,NEW,Описание задачи,02.09.2023 07:00,30\n" +
-                    "2,EPIC,Эпик,NEW,Описание эпика,06.10.2023 12:00,30\n" +
-                    "3,SUBTASK,Подзадача,NEW,Описание подзадачи,2,06.10.2023 12:00,30" + "\n\n" + "1,2,3";
+            String expectedData = """
+                    id,type,name,status,description,epic
+                    1,TASK,Задача,NEW,Описание задачи,02.09.2023 07:00,30
+                    2,EPIC,Эпик,NEW,Описание эпика,06.10.2023 12:00,30
+                    3,SUBTASK,Подзадача,NEW,Описание подзадачи,2,06.10.2023 12:00,30
+
+                    1,2,3""";
 
             String lines = fb.toString();
             assertEquals(expectedData, lines);
@@ -77,7 +80,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     }
 
     @Test
-    void shouldBePositiveIfTasksAreEqual() throws IOException {
+    void shouldBePositiveIfTasksAreEqual() {
         try {
             File file = File.createTempFile("data", "csv");
             Epic epic = new Epic("Эпик", "Описание эпика");

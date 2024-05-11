@@ -170,8 +170,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     @Override
     public String toString() {
         List<String> elements = new ArrayList<>();
-        String head = "id,type,name,status,description,epic";
-        elements.add(head);
+        elements.add(HEAD);
         for (Task task : getTasksList()) {
             elements.add(taskToString(task));
         }
@@ -225,19 +224,10 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return fileBackedTaskManager;
     }
 
-
     static List<Integer> historyFromString(String value) {
         return Arrays.stream(value.split(",")).map(Integer::parseInt).collect(Collectors.toList());
     }
-    public String DateToString(Task task) {
-        if (task.getStartTime() != null) {
-            return task.getStartTime().format(formatter);
-        } else {
-            return "null";
-        }
-    }
 
     public static void main(String[] args) {
-        
     }
 }

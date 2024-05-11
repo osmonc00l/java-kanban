@@ -238,11 +238,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (epics.containsKey(epic.getId())) {
             if (epic.getSubtaskIds().isEmpty()) {
                 epic.setStatus(Status.NEW);
-            } else {
-                ArrayList<Subtask> newSubtasks = new ArrayList<>();
-                int countDone = 0;
+            } else {int countDone = 0;
                 int countNew = 0;
-
                 for (Integer subtaskId : epic.getSubtaskIds()) {
                     Subtask subtask = subtasks.get(subtaskId);
                     if (subtask.getStatus() == Status.DONE) {

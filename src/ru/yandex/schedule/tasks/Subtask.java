@@ -5,7 +5,7 @@ import ru.yandex.schedule.resources.Status;
 import java.time.LocalDateTime;
 
 public class Subtask extends Task {
-    private int epicId;
+    private final int epicId;
 
     public int getEpicId() {
         return epicId;
