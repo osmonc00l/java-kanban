@@ -2,10 +2,12 @@ package ru.yandex.schedule.tasks;
 
 import ru.yandex.schedule.resources.Status;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Epic extends Task {
-    private final ArrayList<Integer> subtaskIds;
+    private final ArrayList<Integer> subtaskIds = new ArrayList<>();
+    private LocalDateTime endTime;
 
     public ArrayList<Integer> getSubtaskIds() {
         return new ArrayList<>(subtaskIds);
@@ -23,6 +25,8 @@ public class Epic extends Task {
                 ", description='" + super.getDescription() + '\'' +
                 ", id=" + super.getId() +
                 ", status=" + super.getStatus() +
+                ", startTime=" + super.getStartTime() +
+                ", duration=" + super.getDuration() +
                 '}';
     }
 
@@ -35,12 +39,19 @@ public class Epic extends Task {
     }
 
     public Epic(String name, String description) {
-        super(name, description, Status.NEW);
-        this.subtaskIds = new ArrayList<>();
+        super(name, description, Status.NEW, null, null);
     }
 
     public Epic(String name, String description, int id) {
-        super(name, description, id, Status.NEW);
-        this.subtaskIds = new ArrayList<>();
+        super(name, description, id, Status.NEW, null, null);
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }

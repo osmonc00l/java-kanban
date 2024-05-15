@@ -5,6 +5,7 @@ import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
     int addTask(Task task);
@@ -39,11 +40,11 @@ public interface TaskManager {
 
     List<Subtask> getSubtasksOfEpic(int epicId);
 
-    List<Task> getAllTasks();
+    List<Task> getTasksList();
 
-    List<Epic> getAllEpics();
+    List<Epic> getEpicsList();
 
-    List<Subtask> getAllSubtasks();
+    List<Subtask> getSubtasksList();
 
     void printEpics();
 
@@ -52,4 +53,6 @@ public interface TaskManager {
     void printTasks();
 
     List<Task> getHistory();
+
+    TreeSet<Task> getSortedTasks();
 }
