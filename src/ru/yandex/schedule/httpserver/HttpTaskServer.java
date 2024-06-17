@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 import java.nio.file.Paths;
 import java.util.function.Supplier;
 
-public class HttpTaskServer{
+public class HttpTaskServer {
     private final HttpServer httpServer;
     private final TaskManager taskManager;
 

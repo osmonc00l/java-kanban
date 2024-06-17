@@ -123,7 +123,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             Task secondTask = new Task("Second task", "Description second task",
                     Status.NEW, LocalDateTime.now().plusHours(1), 10L);
             Task thirdTask = new Task("Third task", "Description third task",
-                    Status.NEW, LocalDateTime.now().plusHours(2), 10L);
+                    Status.NEW, LocalDateTime.now().plusHours(5), 10L);
 
             taskManager.addTask(firstTask);
             taskManager.addTask(secondTask);
