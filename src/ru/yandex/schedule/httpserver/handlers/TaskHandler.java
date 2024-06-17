@@ -6,7 +6,7 @@ import ru.yandex.schedule.tasks.Task;
 
 import java.util.Objects;
 
-public class TaskHandler extends BaseTaskHandler<Task>{
+public class TaskHandler extends BaseTaskHandler<Task> {
     public TaskHandler(TaskManager taskManager) {
         super(taskManager, taskManager::addTask, taskManager::updateTask,
                 taskManager::getTaskById, taskManager::getTasksList, taskManager::deleteTask, Task.class);
