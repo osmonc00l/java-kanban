@@ -26,17 +26,17 @@ public class Subtask extends Task {
 
 
 
-    public Subtask(String name, String description, Status status, int epicId, LocalDateTime startTime, Long duration) {
+    public Subtask(String name, String description, Status status, Integer epicId, LocalDateTime startTime, Long duration) {
         super(name, description, status, startTime, duration);
         this.epicId = epicId;
     }
 
-    public Subtask(String name, String description, Status status, int epicId) {
+    public Subtask(String name, String description, Status status, Integer epicId) {
         super(name, description, status, null, null);
         this.epicId = epicId;
     }
 
-    public Subtask(String name, String description, int id, Status status, int epicId, LocalDateTime startTime,
+    public Subtask(String name, String description, Integer id, Status status, Integer epicId, LocalDateTime startTime,
                    Long duration) {
         super(name, description, id, status, startTime, duration);
         this.epicId = epicId;

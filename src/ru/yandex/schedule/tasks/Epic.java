@@ -42,7 +42,7 @@ public class Epic extends Task {
         super(name, description, Status.NEW, null, null);
     }
 
-    public Epic(String name, String description, int id) {
+    public Epic(String name, String description, Integer id) {
         super(name, description, id, Status.NEW, null, null);
     }
 

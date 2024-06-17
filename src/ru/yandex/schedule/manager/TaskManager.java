@@ -5,26 +5,27 @@ import ru.yandex.schedule.tasks.Subtask;
 import ru.yandex.schedule.tasks.Task;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeSet;
 
 public interface TaskManager {
-    int addTask(Task task);
+    Optional<Task> addTask(Task task);
 
-    void updateTask(Task task);
+    boolean updateTask(Task task);
 
-    void deleteTask(int id);
+    Task deleteTask(int id);
 
-    int addSubtask(Subtask subtask);
+    Optional<Subtask> addSubtask(Subtask subtask);
 
-    void updateSubtask(Subtask updatedSubTask);
+    boolean updateSubtask(Subtask updatedSubTask);
 
     Subtask deleteSubtask(int id);
 
-    int addEpic(Epic epic);
+    Optional<Epic> addEpic(Epic epic);
 
-    void updateEpic(Epic updatedEpic);
+    boolean updateEpic(Epic updatedEpic);
 
-    void deleteEpic(int id);
+    Epic deleteEpic(Integer id);
 
     void deleteAllTasks();
 
@@ -32,11 +33,11 @@ public interface TaskManager {
 
     void deleteAllEpics();
 
-    Task getTaskById(int id);
+    Optional<Task> getTaskById(int id);
 
-    Subtask getSubtaskById(int id);
+    Optional<Subtask> getSubtaskById(int id);
 
-    Epic getEpicById(int id);
+    Optional<Epic> getEpicById(int id);
 
     List<Subtask> getSubtasksOfEpic(int epicId);
 

@@ -43,9 +43,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
     void shouldBePositiveIfTasksSaveIsCorrect() {
         try {
             File file = File.createTempFile("data", "csv");
-            Task task = new Task("Задача", "Описание задачи", Status.NEW,
-                    LocalDateTime.of(2023, 9, 2, 7, 0),
-                    Duration.ofMinutes(30).toMinutes());
+            Task task = new Task("Задача", "Описание задачи", Status.NEW,null, null);
             Epic epic = new Epic("Эпик", "Описание эпика");
 
             FileBackedTaskManager fb = new FileBackedTaskManager(file);
