@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             String taskJson = gson.toJson(task, Task.class);
 
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = URI.create("http://localhost:80/tasks/");
+            URI uri = URI.create("http://localhost:8080/tasks/");
             HttpRequest request = HttpRequest.newBuilder()
                     .POST(HttpRequest.BodyPublishers.ofString(taskJson)).uri(uri).build();
 
@@ -82,7 +82,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             taskManager.addTask(thirdTask);
 
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = URI.create("http://localhost:80/tasks/" + secondTask.getId().toString());
+            URI uri = URI.create("http://localhost:8080/tasks/" + secondTask.getId().toString());
             HttpRequest request = HttpRequest.newBuilder()
                     .GET().uri(uri).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -104,7 +104,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             taskManager.addTask(thirdTask);
 
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = URI.create("http://localhost:80/tasks/");
+            URI uri = URI.create("http://localhost:8080/tasks/");
             HttpRequest request = HttpRequest.newBuilder()
                     .GET().uri(uri).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -134,7 +134,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             taskManager.getTaskById(firstTask.getId());
 
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = URI.create("http://localhost:80/history");
+            URI uri = URI.create("http://localhost:8080/history");
             HttpRequest request = HttpRequest.newBuilder()
                     .GET().uri(uri).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -160,7 +160,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             taskManager.addTask(thirdTask);
 
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = URI.create("http://localhost:80/prioritized/");
+            URI uri = URI.create("http://localhost:8080/prioritized/");
             HttpRequest request = HttpRequest.newBuilder()
                     .GET().uri(uri).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

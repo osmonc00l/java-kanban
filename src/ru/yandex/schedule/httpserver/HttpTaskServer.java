@@ -16,7 +16,7 @@ public class HttpTaskServer {
 
     public HttpTaskServer(Supplier<TaskManager> supplier) throws IOException {
         taskManager = supplier.get();
-        httpServer = HttpServer.create(new InetSocketAddress(80), 0);
+        httpServer = HttpServer.create(new InetSocketAddress(8080), 0);
         registerEndpoints();
     }
 
