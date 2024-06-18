@@ -61,7 +61,7 @@ public class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskMan
             fb.getSubtaskById(subtask.getId());
             String expectedData = """
                     id,type,name,status,description,epic
-                    1,TASK,Задача,NEW,Описание задачи,02.09.2023 07:00,30
+                    1,TASK,Задача,NEW,Описание задачи,null,null
                     2,EPIC,Эпик,NEW,Описание эпика,06.10.2023 12:00,30
                     3,SUBTASK,Подзадача,NEW,Описание подзадачи,2,06.10.2023 12:00,30
 

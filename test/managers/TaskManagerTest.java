@@ -40,8 +40,8 @@ public abstract class TaskManagerTest <T extends TaskManager>{
         taskManager.addTask(task);
 
         Epic epic = new Epic("Эпик", "Описание эпика");
-        int epicId = epic.getId();
         taskManager.addEpic(epic);
+        int epicId = epic.getId();
 
         Subtask subtask1 = new Subtask("Первая подзадача",
                 "Описание первой подзадачи", Status.NEW, epicId,

@@ -82,7 +82,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             taskManager.addTask(thirdTask);
 
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = URI.create("http://localhost:80/epics/" + secondTask.getId().toString());
+            URI uri = URI.create("http://localhost:80/tasks/" + secondTask.getId().toString());
             HttpRequest request = HttpRequest.newBuilder()
                     .GET().uri(uri).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
