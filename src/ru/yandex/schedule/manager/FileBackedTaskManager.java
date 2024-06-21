@@ -27,42 +27,45 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     @Override
-    public int addTask(Task task) {
-        int id = super.addTask(task);
+    public Optional<Task> addTask(Task task) {
+        Optional<Task> optionalTask = super.addTask(task);
         save();
-        return id;
+        return optionalTask;
     }
 
     @Override
-    public void updateTask(Task task) {
-        super.updateTask(task);
+    public boolean updateTask(Task task) {
+        boolean isEpicUpdated = super.updateTask(task);
         save();
+        return isEpicUpdated;
     }
 
     @Override
-    public void deleteTask(int id) {
-        super.deleteTask(id);
-        save();
-    }
-
-    @Override
-    public Task getTaskById(int id) {
-        Task task = super.getTaskById(id);
+    public Task deleteTask(int id) {
+        Task task = super.deleteTask(id);
         save();
         return task;
     }
 
     @Override
-    public int addSubtask(Subtask subtask) {
-        int id = super.addSubtask(subtask);
+    public Optional<Task> getTaskById(int id) {
+        Optional<Task> task = super.getTaskById(id);
         save();
-        return id;
+        return task;
     }
 
     @Override
-    public void updateSubtask(Subtask updatedSubTask) {
-        super.updateSubtask(updatedSubTask);
+    public Optional<Subtask> addSubtask(Subtask subtask) {
+        Optional<Subtask> optionalSubtask = super.addSubtask(subtask);
         save();
+        return optionalSubtask;
+    }
+
+    @Override
+    public boolean updateSubtask(Subtask updatedSubtask) {
+        boolean isSubtaskUpdated = super.updateSubtask(updatedSubtask);
+        save();
+        return isSubtaskUpdated;
     }
 
     @Override
@@ -73,34 +76,36 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     @Override
-    public Subtask getSubtaskById(int id) {
-        Subtask subtask = super.getSubtaskById(id);
+    public Optional<Subtask> getSubtaskById(int id) {
+        Optional<Subtask> subtask = super.getSubtaskById(id);
         save();
         return subtask;
     }
 
     @Override
-    public int addEpic(Epic epic) {
-        int id = super.addEpic(epic);
+    public Optional<Epic> addEpic(Epic epic) {
+        Optional<Epic> optionalEpic = super.addEpic(epic);
         save();
-        return id;
+        return optionalEpic;
     }
 
     @Override
-    public void updateEpic(Epic updatedEpic) {
-        super.updateEpic(updatedEpic);
+    public boolean updateEpic(Epic updatedEpic) {
+        boolean isEpicUpdated = super.updateEpic(updatedEpic);
         save();
+        return isEpicUpdated;
     }
 
     @Override
-    public void deleteEpic(int id) {
-        super.deleteEpic(id);
+    public Epic deleteEpic(Integer id) {
+        Epic epic = super.deleteEpic(id);
         save();
+        return epic;
     }
 
     @Override
-    public Epic getEpicById(int id) {
-        Epic epic = super.getEpicById(id);
+    public Optional<Epic> getEpicById(int id) {
+        Optional<Epic> epic = super.getEpicById(id);
         save();
         return epic;
     }
@@ -124,20 +129,22 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     }
 
     public String taskToString(Task task) {
+        String startTime = task.getStartTime() != null ? task.getStartTime().format(formatter) : "null";
+        String duration = task.getDuration() != null ? String.valueOf(task.getDuration()) : "null";
         return task.getId() + "," + TaskTypes.TASK + "," + task.getName() + "," + task.getStatus() + ","
-                + task.getDescription() + "," + task.getStartTime().format(formatter) + "," + task.getDuration();
+                + task.getDescription() + "," + startTime + "," + duration;
     }
 
     public String epicToString(Epic epic) {
         String startTime = epic.getStartTime() != null ? epic.getStartTime().format(formatter) : "null";
-        String duration = epic.getDuration() != 0 ? String.valueOf(epic.getDuration()) : "null";
+        String duration = epic.getDuration() != null ? String.valueOf(epic.getDuration()) : "null";
         return epic.getId() + "," + TaskTypes.EPIC + "," + epic.getName() + "," + epic.getStatus() + ","
                 + epic.getDescription() + "," + startTime + "," + duration;
     }
 
     public String subtaskToString(Subtask subtask) {
         String startTime = subtask.getStartTime() != null ? subtask.getStartTime().format(formatter) : "null";
-        String duration = subtask.getDuration() != 0 ? String.valueOf(subtask.getDuration()) : "null";
+        String duration = subtask.getDuration() != null ? String.valueOf(subtask.getDuration()) : "null";
         return subtask.getId() + "," + TaskTypes.SUBTASK + "," + subtask.getName() + "," + subtask.getStatus() + ","
                 + subtask.getDescription() + "," + subtask.getEpicId() + ","
                 + startTime + "," + duration;
@@ -155,14 +162,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         switch (type) {
             case TASK:
                 putInTaskHashMap(new Task(lines[2], lines[4], Integer.parseInt(lines[0]), Status.valueOf(lines[3]),
-                        LocalDateTime.parse(lines[5], formatter), Long.parseLong(lines[6])));
+                        (lines[5].equals("null") ? null : LocalDateTime.parse(lines[5], formatter)), (lines[6].equals("null") ? null : Long.parseLong(lines[6]))));
                 break;
             case EPIC:
                 putInEpicHashMap(new Epic(lines[2], lines[4], Integer.parseInt(lines[0])));
                 break;
             case SUBTASK:
                 putInSubtaskHashMap(new Subtask(lines[2], lines[4], Integer.parseInt(lines[0]), Status.valueOf(lines[3]),
-                        Integer.parseInt(lines[5]), LocalDateTime.parse(lines[6], formatter), Long.parseLong(lines[7])));
+                        Integer.parseInt(lines[5]),
+                        (lines[6].equals("null") ? null : LocalDateTime.parse(lines[6], formatter)),
+                        (lines[7].equals("null") ? null : Long.parseLong(lines[7]))));
                 break;
         }
     }

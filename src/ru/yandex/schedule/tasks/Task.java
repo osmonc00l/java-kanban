@@ -6,29 +6,29 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Task {
+public class Task implements Comparable<Task> {
     private String name;
     private String description;
-    private int id;
+    private Integer id;
     private Status status;
     private Duration duration;
     private LocalDateTime startTime;
 
-    public Task(String name, String description, int id, Status status, LocalDateTime startTime, Long duration) {
-        setName(name);
-        setDescription(description);
-        setId(id);
-        setStatus(status);
-        setStartTime(startTime);
+    public Task(String name, String description, Integer id, Status status, LocalDateTime startTime, Long duration) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+        this.startTime = startTime;
         setDuration(duration);
     }
 
     public Task(String name, String description, Status status) {
-        this(name, description, 0, status, null, null);
+        this(name, description, null, status, null, null);
     }
 
     public Task(String name, String description, Status status, LocalDateTime startTime, Long duration) {
-        this(name, description, 0, status, startTime, duration);
+        this(name, description, null, status, startTime, duration);
     }
 
     public String getName() {
@@ -56,7 +56,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id;
+        return Objects.equals(id, task.id);
     }
 
     @Override
@@ -68,11 +68,11 @@ public class Task {
         this.status = status;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -95,11 +95,11 @@ public class Task {
         }
     }
 
-    public long getDuration() {
+    public Long getDuration() {
         if (duration != null) {
             return duration.toMinutes();
         } else {
-            return 0;
+            return null;
         }
 
     }
@@ -114,5 +114,22 @@ public class Task {
 
     public LocalDateTime getEndTime() {
         return startTime.plusMinutes(duration.toMinutes());
+    }
+
+    @Override
+    public int compareTo(Task secondTask) {
+        LocalDateTime firstStart = getStartTime();
+        LocalDateTime firstEnd = getEndTime();
+        LocalDateTime secondStart = secondTask.getStartTime();
+        LocalDateTime secondEnd = secondTask.getEndTime();
+        if ((firstStart.isAfter(secondEnd)) || firstStart.isEqual(secondEnd)
+                && firstStart.isAfter(secondStart)) {
+            return 1;
+        } else if ((secondStart.isAfter(firstEnd)) || secondStart.isEqual(firstEnd)
+                && secondStart.isEqual(firstEnd)) {
+            return -1;
+        } else {
+            return 0;
+        }
     }
 }
