@@ -6,11 +6,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import ru.yandex.schedule.httpserver.adapters.DurationAdapter;
 import ru.yandex.schedule.httpserver.adapters.LocalDateTimeAdapter;
-import ru.yandex.schedule.httpserver.adapters.TaskAdapter;
 import ru.yandex.schedule.httpserver.exception.BadRequest;
 import ru.yandex.schedule.manager.TaskManager;
 import ru.yandex.schedule.resources.ManagerSaveException;
-import ru.yandex.schedule.tasks.Task;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -102,8 +100,7 @@ public abstract class BaseHttpHandler implements HttpHandler {
         return GSON_BUILDER
                 .setPrettyPrinting()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-                .registerTypeAdapter(Duration.class, new DurationAdapter())
-                .registerTypeAdapter(Task.class, new TaskAdapter());
+                .registerTypeAdapter(Duration.class, new DurationAdapter());
     }
 
     protected static Gson gsonInitialize() {

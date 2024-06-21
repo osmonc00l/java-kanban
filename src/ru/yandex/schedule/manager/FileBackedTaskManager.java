@@ -30,7 +30,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     public Optional<Task> addTask(Task task) {
         Optional<Task> optionalTask = super.addTask(task);
         save();
-        System.out.println(this);
         return optionalTask;
     }
 

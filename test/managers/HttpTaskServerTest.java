@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.TreeSet;
@@ -50,7 +51,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
         @Test
         public void testCreateTask() throws IOException, InterruptedException {
-            Task task = new Task("task", "description", Status.NEW,null, null);
+            Task task = new Task("task", "description", Status.NEW, LocalDateTime.of(2023, 10, 6, 12, 0),
+                    Duration.ofMinutes(30).toMinutes());
             String taskJson = gson.toJson(task, Task.class);
 
             HttpClient client = HttpClient.newHttpClient();

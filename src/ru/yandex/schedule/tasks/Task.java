@@ -15,11 +15,11 @@ public class Task implements Comparable<Task> {
     private LocalDateTime startTime;
 
     public Task(String name, String description, Integer id, Status status, LocalDateTime startTime, Long duration) {
-        setName(name);
-        setDescription(description);
-        setId(id);
-        setStatus(status);
-        setStartTime(startTime);
+        this.name = name;
+        this.description = description;
+        this.id = id;
+        this.status = status;
+        this.startTime = startTime;
         setDuration(duration);
     }
 
