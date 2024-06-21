@@ -18,7 +18,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.TreeSet;
@@ -51,8 +50,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
         @Test
         public void testCreateTask() throws IOException, InterruptedException {
-            Task task = new Task("task", "description", Status.NEW, LocalDateTime.of(2023, 10, 6, 12, 0),
-                    Duration.ofMinutes(30).toMinutes());
+            Task task = new Task("task", "description", Status.NEW, null, null);
             String taskJson = gson.toJson(task, Task.class);
 
             HttpClient client = HttpClient.newHttpClient();
@@ -136,12 +134,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             taskManager.getTaskById(firstTask.getId());
 
             HttpClient client = HttpClient.newHttpClient();
-            URI uri = URI.create("http://localhost:8080/history");
+            URI uri = URI.create("http://localhost:8080/history/");
             HttpRequest request = HttpRequest.newBuilder()
                     .GET().uri(uri).build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             assertEquals(200, response.statusCode());
+            System.out.println(response.body());
 
             List<Task> taskListFromJson = gson.fromJson(response.body(), new TaskListTypeToken().getType());
             List<Task> taskListFromManager = taskManager.getHistory();
@@ -160,7 +159,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             taskManager.addTask(firstTask);
             taskManager.addTask(secondTask);
             taskManager.addTask(thirdTask);
-
+            System.out.println(taskManager.getSortedTasks());
             HttpClient client = HttpClient.newHttpClient();
             URI uri = URI.create("http://localhost:8080/prioritized/");
             HttpRequest request = HttpRequest.newBuilder()
@@ -168,7 +167,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             assertEquals(200, response.statusCode());
-
+            System.out.println();
             TreeSet<Task> prioritizedFromManager = taskManager.getSortedTasks();
             TreeSet<Task> prioritizedFromJson = gson.fromJson(response.body(), new TaskTreeSetTypeToken().getType());
 
